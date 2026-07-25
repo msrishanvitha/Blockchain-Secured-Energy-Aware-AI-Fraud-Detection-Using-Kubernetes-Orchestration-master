@@ -1,0 +1,14 @@
+# scheduler-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: green-scheduler-service
+  labels:
+    app: green-scheduler
+spec:
+  selector:
+    app: green-scheduler
+  ports:
+    - protocol: TCP
+      port: 9100
+      targetPort: 9100

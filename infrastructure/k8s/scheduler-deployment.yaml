@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: green-scheduler
+  template:
+    metadata:
+      labels:
+        app: green-scheduler
+    spec:
+      serviceAccountName: green-scheduler-sa
+      containers:
+        - name: green-scheduler
+          image: green_scheduler:v2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9100

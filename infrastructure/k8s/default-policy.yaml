@@ -1,0 +1,7 @@
+apiVersion: scheduling.greenai.dev/v1
+kind: EnergyPolicy
+metadata:
+  name: default-policy
+spec:
+  minGreenScore: 0.6          # Minimum score required to scale up workloads
+  splitThreshold: 0.1         # Allow workload split if regions differ by <10% green score

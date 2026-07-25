@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: green-ai
+  template:
+    metadata:
+      labels:
+        app: green-ai
+    spec:
+      containers:
+        - name: green-ai
+          image: green_ai:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+            - containerPort: 8001

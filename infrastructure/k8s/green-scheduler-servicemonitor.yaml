@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: green-scheduler-servicemonitor
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: green-scheduler
+  namespaceSelector:
+    matchNames:
+      - default
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s

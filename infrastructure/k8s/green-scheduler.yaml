@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: green-scheduler
+  labels:
+    app: green-scheduler
+spec:
+  ports:
+    - port: 9100
+      targetPort: 9100
+  selector:
+    app: green-scheduler
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-scheduler
+  labels:
+    app: green-scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: green-scheduler
+  template:
+    metadata:
+      labels:
+        app: green-scheduler
+    spec:
+      containers:
+        - name: scheduler
+          image: suchitha20/green-scheduler:v-fix-1
+          ports:
+            - containerPort: 9100
+          env:
+            - name: ELECTRICITYMAP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: electricitymap
+                  key: TOKEN

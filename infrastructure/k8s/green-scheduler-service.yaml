@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: green-scheduler
+  namespace: default
+  labels:
+    app: green-scheduler
+spec:
+  selector:
+    app: green-scheduler
+  ports:
+    - name: metrics
+      port: 9100
+      targetPort: 9100
+      protocol: TCP

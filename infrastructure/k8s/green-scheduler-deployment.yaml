@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-scheduler
+  labels:
+    app: green-scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: green-scheduler
+  template:
+    metadata:
+      labels:
+        app: green-scheduler
+    spec:
+      containers:
+        - name: scheduler
+          image: suchitha20/green-scheduler:latest
+          imagePullPolicy: IfNotPresent
+          command: ["python3", "green_scheduler.py"]
+          ports:
+            - containerPort: 9100
+          env:
+            - name: ELECTRICITYMAP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: electricitymap
+                  key: TOKEN
