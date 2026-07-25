@@ -93,6 +93,3 @@ A GitHub Actions workflow (`.github/workflows/build.yml`) builds, scans (Trivy),
 - Do not commit `node_modules/` — see `.gitignore`. Run `npm install` inside `blockchain/green-fraud-blockchain/` after cloning.
 - No API keys or secrets are included in this repo; set any required keys (e.g. `ELECTRICITYMAP_KEY`, `OPENWEATHERMAP_KEY`) as environment variables or Kubernetes secrets.
 
-## License
-
-Smart contracts are marked MIT-licensed (`AuditLog.sol`). Add a `LICENSE` file at the repo root if you want the whole project covered by a specific license.
