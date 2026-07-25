@@ -1,0 +1,24 @@
+﻿{
+  "spec": {
+    "template": {
+      "spec": {
+        "containers": [
+          {
+            "name": "scheduler","image":suchitha20/green-scheduler:latest,
+            "env": [
+              {
+                "name": "ELECTRICITYMAP_TOKEN",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "name": "electricitymap",
+                    "key": "TOKEN"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

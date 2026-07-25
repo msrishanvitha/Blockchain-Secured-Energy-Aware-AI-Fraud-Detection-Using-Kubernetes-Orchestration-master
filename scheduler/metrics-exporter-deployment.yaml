@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: green-scheduler-metrics # <-- NEW NAME
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: green-scheduler-metrics # <-- NEW LABEL
+      template:
+        metadata:
+          labels:
+            app: green-scheduler-metrics # <-- NEW LABEL
+        spec:
+          containers:
+          - name: metrics-exporter
+            image: green_scheduler:v2     # <-- YOUR V2 IMAGE
+            imagePullPolicy: IfNotPresent
+            ports:
+            - containerPort: 9100

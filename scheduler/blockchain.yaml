@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: blockchain
+  labels:
+    app: blockchain
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "7000"
+spec:
+  clusterIP: None
+  selector:
+    app: blockchain
+  ports:
+    - name: api
+      port: 7000
+      targetPort: 7000
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: blockchain
+spec:
+  serviceName: blockchain
+  replicas: 3
+  selector:
+    matchLabels:
+      app: blockchain
+  template:
+    metadata:
+      labels:
+        app: blockchain
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "7000"
+    spec:
+      containers:
+      - name: node
+        image: suchitha20/blockchain-node:v1
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: SERVICE_NAME
+            value: "blockchain"
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: NODES
+            value: "blockchain-0,blockchain-1,blockchain-2"
+          - name: PORT
+            value: "7000"
+        command: [ "sh", "-c" ]
+        args:
+          - |
+            export NODE_ID=${HOSTNAME##*-} && python blockchain_node.py
+        ports:
+          - containerPort: 7000
+            name: api
